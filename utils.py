@@ -61,9 +61,7 @@ def execute_Export(self, context):
         filepath=export_path + file_name + ".mdl",
     )
     
-    # Update global export counter
-    from . import __init__ as init_module
-    init_module.export_sum += 1
+    # Export completed successfully
     return {'FINISHED'}
 
 

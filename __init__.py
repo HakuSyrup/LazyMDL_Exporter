@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Lazy MDL Exporter v2",
     "author": "HakuShiro",
-    "version": (2, 0, 1),
+    "version": (2, 0, 4),
     "blender": (3, 6, 0),
     "location": "View3D > Toolshelf(T)",
     "description": "Lazy MDL Exporter",
@@ -11,14 +11,34 @@ bl_info = {
 }
 
 import bpy
+import importlib
+import sys
 
 from . import preferences
 from . import operators
 from . import ui
 from . import utils
 
-# Global variable for export counting
-export_sum = 0
+# Force reload modules to clear any cached versions
+def force_reload():
+    """Force reload all modules to clear cache"""
+    modules_to_reload = [
+        'preferences',
+        'operators',
+        'ui',
+        'utils'
+    ]
+    
+    package_name = __name__
+    for module_name in modules_to_reload:
+        full_module_name = f"{package_name}.{module_name}"
+        if full_module_name in sys.modules:
+            importlib.reload(sys.modules[full_module_name])
+
+# Call force reload on import
+force_reload()
+
+# Removed global export counter - using local counting instead
 
 classes = [
     preferences.LazyMDLExporter_Preferences,

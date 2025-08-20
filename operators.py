@@ -58,8 +58,6 @@ class LazyMDLExporter_Export(Operator):
     bl_label = "Export as MDL"
   
     def execute(self, context):
-        from . import __init__ as init_module
-        init_module.export_sum = 0
         
         if not context.active_object:
             self.report({'ERROR'}, "No active object selected.")
@@ -114,8 +112,7 @@ class LazyMDLExporter_Export(Operator):
                 bpy.ops.object.mode_set(mode='EDIT')
         
         # Report results
-        if init_module.export_sum > 0:
-            self.report({'INFO'}, f"{init_module.export_sum} object(s) exported as MDL.")
+        self.report({'INFO'}, "Export completed.")
         
         return {'FINISHED'}
     
